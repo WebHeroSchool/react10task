@@ -7,8 +7,6 @@ const Item = ({value, isDone}) => (<span className ={
         [styles.done]: isDone
     })
 }>
-    
-    
     {value}
 </span>);
 
