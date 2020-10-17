@@ -6,15 +6,18 @@ import styles from "./App.module.css";
 
 const items = [
   {
-    value:"Закончить реакт"
+    value:"Закончить реакт",
+    isDone: false
   },
 
   {
-    value:"Похудеть"
+    value:"Похудеть",
+    isDone: false
   },
 
   {
-    value:"Пройти Witcher 3"
+    value:"Пройти Witcher 3",
+    isDone: true
   }
 ]
 const App = () => (
