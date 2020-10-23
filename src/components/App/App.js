@@ -10,8 +10,8 @@ import styles from "./App.module.css";
 
 
 class App extends React.Component{
-  render() {
-    const items = [
+  state = {
+    items: [
       {
         value:"Закончить реакт",
         isDone: false
@@ -27,6 +27,9 @@ class App extends React.Component{
         isDone: true
       }
     ]
+  };
+  
+  render() {
     return(
       <div className={styles.board}>
         <div className={styles.holder}>
@@ -37,7 +40,7 @@ class App extends React.Component{
           <div className={styles.paper}> 
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
-              <ItemList items={items}/>
+              <ItemList items={this.state.items}/>
               <InputItem />
             </div>
             <Footer count={3}/>
