@@ -28,6 +28,8 @@ class App extends React.Component{
       }
     ]
   };
+
+  onClickDone = isDone => console.log(isDone);
   
   render() {
     return(
@@ -40,7 +42,7 @@ class App extends React.Component{
           <div className={styles.paper}> 
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
-              <ItemList items={this.state.items}/>
+              <ItemList items={this.state.items} onClickDone={this.onClickDone}/>
               <InputItem />
             </div>
             <Footer count={3}/>
