@@ -14,20 +14,36 @@ class App extends React.Component{
     items: [
       {
         value:"Закончить реакт",
-        isDone: false
+        isDone: false,
+        id:1
       },
     
       {
         value:"Похудеть",
-        isDone: false
+        isDone: false,
+        id:2
       },
     
       {
         value:"Пройти Witcher 3",
-        isDone: true
+        isDone: true,
+        id:3
       }
     ]
   };
+
+  onClickDone = id => { 
+  const newItemList = this.state.items.map(item =>{
+    const newItem = {...item};
+
+    if (item.id===id){
+      newItem.isDone = !item.isDone;
+    }
+    return newItem
+  });
+
+  this.setState({ items: newItemList });
+}
   
   render() {
     return(
@@ -40,7 +56,7 @@ class App extends React.Component{
           <div className={styles.paper}> 
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
-              <ItemList items={this.state.items}/>
+              <ItemList items={this.state.items} onClickDone={this.onClickDone}/>
               <InputItem />
             </div>
             <Footer count={3}/>
