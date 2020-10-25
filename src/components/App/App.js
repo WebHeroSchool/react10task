@@ -35,15 +35,21 @@ class App extends React.Component{
   onClickDone = id => { 
   const newItemList = this.state.items.map(item =>{
     const newItem = {...item};
-
+    
     if (item.id===id){
       newItem.isDone = !item.isDone;
+      console.log(newItem.id);
     }
     return newItem
   });
 
   this.setState({ items: newItemList });
 }
+
+  onClickDelete = id =>{
+    const newItemList = this.state.items.filter(item => item.id !== id);
+    this.setState({ items: newItemList });
+  }
   
   render() {
     return(
@@ -56,7 +62,7 @@ class App extends React.Component{
           <div className={styles.paper}> 
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
-              <ItemList items={this.state.items} onClickDone={this.onClickDone}/>
+              <ItemList items={this.state.items} onClickDone={this.onClickDone} onClickDelete={this.onClickDelete}/>
               <InputItem />
             </div>
             <Footer count={3}/>
