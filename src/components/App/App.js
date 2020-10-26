@@ -29,8 +29,16 @@ class App extends React.Component{
         isDone: true,
         id:3
       }
-    ]
+    ],
+    count:3,
+    isActive: false
   };
+
+  btnisActive = () => {
+    if(this.state.count>8) {
+      this.setState({isActive: true})
+    }
+  }
 
   onClickDone = id => { 
   const newItemList = this.state.items.map(item =>{
@@ -38,19 +46,30 @@ class App extends React.Component{
     
     if (item.id===id){
       newItem.isDone = !item.isDone;
-      console.log(newItem.id);
     }
     return newItem
   });
 
-  this.setState({ items: newItemList });
-}
+    this.setState({ items: newItemList });
+  }
 
   onClickDelete = id =>{
     const newItemList = this.state.items.filter(item => item.id !== id);
-    this.setState({ items: newItemList });
+    this.setState({ items: newItemList, count: this.state.count-1 });
   }
   
+  onClickAdd = value => this.setState(state =>({
+    items: [
+      ...state.items,
+      {
+        value,
+        isDone: false,
+        id: state.count + 1
+      }
+    ],
+    count: state.count + 1
+  }))
+
   render() {
     return(
       <div className={styles.board}>
@@ -63,9 +82,9 @@ class App extends React.Component{
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
               <ItemList items={this.state.items} onClickDone={this.onClickDone} onClickDelete={this.onClickDelete}/>
-              <InputItem />
+              <InputItem onClickAdd={this.onClickAdd} isActive={this.state.isActive} count={this.state.count} btnisActive={this.btnisActive}/>
             </div>
-            <Footer count={3}/>
+            <Footer count={this.state.count}/>
           </div>
           <div className={styles.icons}>
             <IconButton>

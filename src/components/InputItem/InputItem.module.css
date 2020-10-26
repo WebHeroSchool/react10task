@@ -1,3 +1,9 @@
-.inpt {
-    padding-top: 29px;
+.input {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.MuiInput-underline:after {
+    border-bottom: 2px solid grey;
 }
