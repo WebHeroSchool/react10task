@@ -26,7 +26,7 @@ class App extends React.Component{
     
       {
         value:"Пройти Witcher 3",
-        isDone: true,
+        isDone: false,
         id:3
       }
     ],
