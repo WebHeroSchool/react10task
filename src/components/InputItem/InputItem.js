@@ -20,7 +20,6 @@ class InputItem extends React.Component {
     if(this.state.InputValue===''){
       this.setState({isError: "ПОЛЕ НЕ ДОЛЖНО БЫТЬ ПУСТЫМ!"})
       this.setState({isEmpty: true})
-      console.log("isError ="+this.state.isError)
     }
     else {
       this.props.onClickAdd(this.state.InputValue);
