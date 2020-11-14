@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import ItemList from "../ItemList/ItemList";
 import InputItem from "../InputItem/InputItem";
 import Footer from "../Footer/Footer";
@@ -9,8 +9,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import styles from "./App.module.css";
 
 
-class App extends React.Component{
-  state = {
+const App = () => {
+  const initialState = {
     items: [
       {
         value:"Закончить реакт",
@@ -31,11 +31,22 @@ class App extends React.Component{
       }
     ],
     count:3,
-    isActive: false
   };
 
-  onClickDone = id => { 
-  const newItemList = this.state.items.map(item =>{
+  const[items, setItems]=useState(initialState.items);
+  const[count, setCount]=useState(initialState.count);
+
+  useEffect(()=>{
+    console.log("componentDidUpdate");
+  });
+
+  useEffect(()=>{
+    console.log("componentDidMount");
+  }, []);
+
+
+ const onClickDone = id => { 
+  const newItemList = items.map(item =>{
     const newItem = {...item};
     
     if (item.id===id){
@@ -44,27 +55,28 @@ class App extends React.Component{
     return newItem
   });
 
-    this.setState({ items: newItemList });
+    setItems(newItemList);
   }
 
-  onClickDelete = id =>{
-    const newItemList = this.state.items.filter(item => item.id !== id);
-    this.setState({ items: newItemList, count: this.state.count-1 });
+ const onClickDelete = id =>{
+    const newItemList = items.filter(item => item.id !== id);
+    setItems(newItemList);
+    setCount((count) => count-1);
   }
   
-  onClickAdd = value => this.setState(state =>({
-    items: [
-      ...state.items,
+ const onClickAdd = value => {
+   const newItems = [
+      ...items,
       {
         value,
         isDone: false,
-        id: state.count + 1
+        id: count + 1
       }
-    ],
-    count: state.count + 1
-  }))
+    ];
+    setItems(newItems);
+    setCount((count) => count+1);
+  }
 
-  render() {
     return(
       <div className={styles.board}>
         <div className={styles.holder}>
@@ -75,10 +87,10 @@ class App extends React.Component{
           <div className={styles.paper}> 
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
-              <ItemList items={this.state.items} onClickDone={this.onClickDone} onClickDelete={this.onClickDelete} btnisActive={this.btnisActive}/>
-              <InputItem onClickAdd={this.onClickAdd} isActive={this.state.isActive} count={this.state.count} btnisActive={this.btnisActive}/>
+              <ItemList items={items} onClickDone={onClickDone} onClickDelete={onClickDelete}/>
+              <InputItem onClickAdd={onClickAdd} count={count}/>
             </div>
-            <Footer count={this.state.count}/>
+            <Footer count={count}/>
           </div>
           <div className={styles.icons}>
             <IconButton>
@@ -92,7 +104,6 @@ class App extends React.Component{
             </IconButton>  
           </div>
       </div>);
-  }
 };
 
 

@@ -15,12 +15,10 @@ class InputItem extends React.Component {
     this.setState({
       InputValue: ''
     });
-    console.log("InputValue :"+ this.state.InputValue)
 
     if(this.state.InputValue===''){
       this.setState({isError: "ПОЛЕ НЕ ДОЛЖНО БЫТЬ ПУСТЫМ!"})
       this.setState({isEmpty: true})
-      console.log("isError ="+this.state.isError)
     }
     else {
       this.props.onClickAdd(this.state.InputValue);
