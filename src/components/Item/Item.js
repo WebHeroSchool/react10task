@@ -11,7 +11,7 @@ class Item extends React.Component {
         return (
             <span className ={
                 classnames({
-                    [styles.done]: isDone
+                    [styles.done]: isDone,
                 })
             }>
                 {value}

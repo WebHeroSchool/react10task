@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import ItemList from "../ItemList/ItemList";
 import InputItem from "../InputItem/InputItem";
 import Footer from "../Footer/Footer";
@@ -15,34 +15,74 @@ const Todo = () => {
       {
         value:"Закончить реакт",
         isDone: false,
-        id:1
+        id:1,
+        isHidden: false
       },
     
       {
         value:"Похудеть",
         isDone: false,
-        id:2
+        id:2,
+        isHidden:false,
       },
     
       {
         value:"Пройти Witcher 3",
         isDone: false,
-        id:3
+        id:3,
+        isHidden:false,
       }
     ],
     count:3,
+    birthId:3,
+    filter:'all',
+
   };
 
+  const[filter, setFilter]=useState(initialState.filter);
   const[items, setItems]=useState(initialState.items);
   const[count, setCount]=useState(initialState.count);
+  const[birthId, setbirthId]=useState(initialState.birthId);
 
-  useEffect(()=>{
-    console.log("componentDidUpdate");
+
+const taskComplete = () => { 
+  setFilter('done');
+  const newItemList = items.map(item =>{
+    const newItem = {...item};
+    
+    if (item.isDone===true){
+      newItem.isHidden = false;
+    } else newItem.isHidden = true;
+    return newItem
   });
+  setItems(newItemList);
+  }
 
-  useEffect(()=>{
-    console.log("componentDidMount");
-  }, []);
+  const taskNotComplete = () => { 
+    setFilter('unDone');
+    const newItemList = items.map(item =>{
+      const newItem = {...item};
+      
+      if (item.isDone!==true){
+        newItem.isHidden = false;
+      } else newItem.isHidden = true;
+      return newItem
+    });
+    setItems(newItemList);
+    }
+
+  const taskAll = () =>{
+    setFilter('all');
+    const newItemList = items.map(item =>{
+      const newItem = {...item};
+      
+      if (item.id){
+        newItem.isHidden = false;
+      };
+      return newItem
+    });
+    setItems(newItemList);
+  }
 
  const onClickDone = id => { 
   const newItemList = items.map(item =>{
@@ -50,10 +90,12 @@ const Todo = () => {
     
     if (item.id===id){
       newItem.isDone = !item.isDone;
+      if(filter !== 'all'){
+        newItem.isHidden = true;
+      };
     }
     return newItem
   });
-
     setItems(newItemList);
   }
 
@@ -62,19 +104,26 @@ const Todo = () => {
     setItems(newItemList);
     setCount((count) => count-1);
   }
-  
- const onClickAdd = value => {
-   const newItems = [
-      ...items,
-      {
-        value,
-        isDone: false,
-        id: count + 1
-      }
-    ];
-    setItems(newItems);
-    setCount((count) => count+1);
-  }
+
+ const onClickAdd = (value) => {
+      let isThisTaskVisible = false;
+
+      if (filter === 'done') {
+      isThisTaskVisible = true
+      };
+        const newItems = [
+          ...items,
+          {
+            value,
+            isDone: false,
+            id: birthId + 1,
+            isHidden: isThisTaskVisible,
+          }
+        ];
+        setItems(newItems);
+        setCount((count) => count+1);
+        setbirthId((birthId) => birthId+1);
+     }
 
     return(
       <div className={styles.board}>
@@ -87,18 +136,18 @@ const Todo = () => {
             <h1 className={styles.header}>Список дел</h1>
             <div className={styles.content}>
               <ItemList items={items} onClickDone={onClickDone} onClickDelete={onClickDelete}/>
-              <InputItem onClickAdd={onClickAdd} count={count}/>
+              <InputItem items={items} onClickAdd={onClickAdd} count={count}/>
             </div>
             <Footer count={count}/>
           </div>
           <div className={styles.icons}>
-            <IconButton>
+            <IconButton onClick={()=> taskAll()}>
               <DehazeIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={()=> taskComplete()}>
               <CheckIcon /> 
             </IconButton>
-            <IconButton>
+            <IconButton onClick={()=> taskNotComplete()}>
               <ClearIcon />
             </IconButton>  
           </div>
