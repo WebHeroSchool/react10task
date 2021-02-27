@@ -3,10 +3,16 @@ import Item from "../Item/Item";
 import Checkbox from '@material-ui/core/Checkbox';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import classnames from 'classnames'
 import styles from "./ItemList.module.css"
 
-const ItemList = ({items, onClickDone, onClickDelete, btnisActive}) => (<ul className={styles.list}>
-  {items.map(item => <li key={item.id} className={styles.item}>
+const ItemList = ({items, onClickDone, onClickDelete}) => (<ul className={styles.list}>
+  {items.map(item => <li key={item.id} className ={
+                classnames({
+                    [styles.item]: true,
+                    [styles.hidden]: item.isHidden,
+                })
+            }>
     <Checkbox
         color="default"
         inputProps={{ 'aria-label': 'checkbox with default color' }}

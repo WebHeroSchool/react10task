@@ -15,3 +15,7 @@
     background-image: linear-gradient(#ccc 1px, transparent 1px);
     background-size: 100% 98%;
 }
+
+.hidden {
+    display: none;
+}

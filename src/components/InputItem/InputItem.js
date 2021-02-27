@@ -6,6 +6,7 @@ import classnames from 'classnames'
 
 class InputItem extends React.Component {
   state = {
+    values: '',
     InputValue: '',
     isError:" ",
     isEmpty: false,
@@ -19,11 +20,16 @@ class InputItem extends React.Component {
     if(this.state.InputValue===''){
       this.setState({isError: "ПОЛЕ НЕ ДОЛЖНО БЫТЬ ПУСТЫМ!"})
       this.setState({isEmpty: true})
+      console.log(this.state.values)
     }
+    else if(this.state.values.indexOf(this.state.InputValue)===-1){
+        this.props.onClickAdd(this.state.InputValue)
+    }
+
     else {
-      this.props.onClickAdd(this.state.InputValue);
+      this.setState({isEmpty: true})
+      this.setState({isError: "ЭТО ДЕЛО УЖЕ ДОБАВЛЕНО"})
     }
-    
   }
 
   render () {
@@ -36,16 +42,16 @@ class InputItem extends React.Component {
             fullWidth
             label={this.state.isError}
             value={this.state.InputValue}
-            onChange={event => this.setState({ InputValue: event.target.value.toUpperCase(), isError:" ", isEmpty: false})}
+            onChange={event => this.setState({ InputValue: event.target.value, isError:" ", isEmpty: false, values:this.props.items.map(item=> item.value)})}
             InputLabelProps={{
               shrink: true,
             }}
           />
-          {count<8 ? 
+          {count < 7 ? 
             <Button variant="contained" color="default" disabled={false} onClick={this.onButtonClick} >  
             Добавить дело 
             </Button> : <Button variant="contained" color="default" disabled={true}>  
-            Выполни хотя бы 1 задание 
+            Выполни хотя бы 1 дело
             </Button>
           }
           

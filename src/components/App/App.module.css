@@ -1,7 +1,38 @@
 .wrap {
     display: flex;
+    height: 100%;
+    justify-content: center;
+    min-width: 320px;
+}
+.sidebar{
+    margin-right: 10px;
+    width: 140px;
+    filter: drop-shadow(3px 3px 2px grey);
 }
 
 .link {
     text-decoration: none;
+    color: #000 !important;
+}
+
+.content{ 
+    filter: drop-shadow(3px 3px 2px grey);
+}
+
+@media(max-width:560px){
+    .wrap{
+        flex-flow: column;
+        width: 90%;
+    }
+
+    .sidebar{
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .list{
+        display: flex;
+        justify-content: space-between;
+    }
 }
